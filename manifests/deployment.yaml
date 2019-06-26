@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-mysql
+  labels:
+    app: example-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-app
+      tier: mysql
+  template:
+    metadata:
+      labels:
+        app: example-app
+        tier: mysql
+    spec:
+      containers:
+        - image: mariadb
+          name: mysql
+          env:
+            - name: MYSQL_DB
+              value: mysql
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: example-mysql-secrets
+                    key: mysql_root_password
+            - name: MYSQL_USER
+              valueFrom:
+                  secretKeyRef:
+                    name: example-mysql-secrets
+                    key: mysql_super_user_username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: example-mysql-secrets
+                  key: mysql_super_user_password
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-stateful-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-stateful-data
+          persistentVolumeClaim:
+            claimName: example-mysql
