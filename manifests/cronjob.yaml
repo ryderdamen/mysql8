@@ -16,7 +16,7 @@ spec:
               secretName: example-mysql-secrets
           containers:
           - name: backup-mysql-example
-            image: gcr.io/your-google-cloud-project-id/mysql-backup:0.0.1
+            image: ryderdamen/mysql-backup:10
             imagePullPolicy: Always
             volumeMounts:
             - name: google-cloud-key

@@ -1,5 +1,5 @@
-IMAGE_NAME=gcr.io/your-google-cloud-project-id/mysql-restore
-VERSION=0.0.1
+IMAGE_NAME=ryderdamen/mysql-restore
+VERSION=10
 
 .PHONY: build
 build:

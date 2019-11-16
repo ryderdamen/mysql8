@@ -1,4 +1,4 @@
-FROM mariadb
+FROM mariadb:10
 RUN apt-get update && apt-get install -y curl
 RUN apt install -y python2.7
 RUN curl https://sdk.cloud.google.com | bash
